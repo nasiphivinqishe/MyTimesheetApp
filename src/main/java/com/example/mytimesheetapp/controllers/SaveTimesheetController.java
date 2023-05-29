@@ -1,5 +1,8 @@
 package com.example.mytimesheetapp.controllers;
 
-public class SaveTimesheetControler {
-    
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class SaveTimesheetController {
+
 }

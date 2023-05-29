@@ -1,2 +1,5 @@
-package com.example.mytimesheetapp.constants;public class TimesheetStatuses {
+package com.example.mytimesheetapp.constants;
+
+public enum TimesheetStatuses {
+    APPROVED, DECLINED, PENDING
 }

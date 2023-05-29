@@ -2,33 +2,22 @@ package com.example.mytimesheetapp.handlers;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.amazonaws.services.lambda.runtime.events.SQSEvent;
 import com.example.mytimesheetapp.models.GetTimesheetRequest;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.mytimesheetapp.services.TimesheetService;
 
-public class MyLambdaFunction implements RequestHandler<SQSEvent, Void> {
+public class GetDownloadTimesheetRequestHandler implements RequestHandler<GetTimesheetRequest, String> {
 
     @Override
-    public Void handleRequest(SQSEvent event, Context context) {
+    public String handleRequest(GetTimesheetRequest getTimesheetRequest, Context context) {
         try {
-            // Extract the payload from the SQSEvent
-            String payload = event.getRecords().get(0).getBody();
-
-            // Deserialize the payload to GetTimesheetRequest object
-            ObjectMapper objectMapper = new ObjectMapper();
-            GetTimesheetRequest request = objectMapper.readValue(payload, GetTimesheetRequest.class);
-
-            // Log the payload
-            System.out.println("Payload: " + payload);
-            System.out.println("ID: " + request.getTimesheet_id());
-            System.out.println("SomeOtherField: " + request.getEmployee_id());
-
+            TimesheetService timesheetService = new TimesheetService();
+            timesheetService.sendMessageToSqs(getTimesheetRequest);
+            return "Successfully sent message to SQS";
+//            timesheetService.downloadTimesheet(event);
         } catch (Exception e) {
-            // Handle any exceptions
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return "Failed to send message to SQS";
         }
-
-        return null;
     }
 }
 

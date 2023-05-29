@@ -1,27 +1,27 @@
-package com.example.mytimesheetapp;
+package com.example.mytimesheetapp.handlers;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.example.mytimesheetapp.models.Timesheet;
+import com.example.mytimesheetapp.services.TimesheetService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.ResultSet;
-
-public class GetTimesheetByIdHandler implements RequestHandler<String, String> {
+public class GetTimesheetByIdHandler implements RequestHandler<Integer, Timesheet> {
     private final static Logger logger = LogManager.getLogger(GetTimesheetByIdHandler.class.getName());
     TimesheetService timesheetService = new TimesheetService();
 
     @Override
-    public String handleRequest(String timesheetId, Context context) {
+    public Timesheet handleRequest(Integer timesheetId, Context context) {
         try {
-            ResultSet resultSet = timesheetService.getTimesheetById(timesheetId);
-            while (resultSet.next()) {
-                String t = resultSet.getString("timesheet_id");
-                logger.info("Have found result..."+t);
-            }
-            return "Successfully got results.";
+            Timesheet timesheet = timesheetService.getTimesheetById(timesheetId);
+
+            System.out.println("-----" + timesheet + "------");
+
+            return timesheet;
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return "Error occured on process";
+            throw new RuntimeException(e);
         }
     }
 }

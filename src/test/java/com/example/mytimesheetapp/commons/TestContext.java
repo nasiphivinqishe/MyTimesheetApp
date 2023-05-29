@@ -1,4 +1,4 @@
-package com.example.mytimesheetapp;
+package com.example.mytimesheetapp.commons;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.CognitoIdentity;
 import com.amazonaws.services.lambda.runtime.ClientContext;

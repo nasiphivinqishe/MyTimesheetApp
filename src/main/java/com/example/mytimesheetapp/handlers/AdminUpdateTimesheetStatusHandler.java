@@ -1,22 +1,23 @@
 package com.example.mytimesheetapp.handlers;
 
 import com.amazonaws.services.lambda.runtime.Context;
-import com.example.mytimesheetapp.models.Timesheet;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.example.mytimesheetapp.models.TimesheetStatusRequest;
 import com.example.mytimesheetapp.services.TimesheetService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class AdminUpdateTimesheetStatus {
+public class AdminUpdateTimesheetStatusHandler implements RequestHandler<TimesheetStatusRequest, String> {
     TimesheetService timesheetService = new TimesheetService();
-    private final static Logger logger = LogManager.getLogger(SaveTimesheetHandler.class.getName());
+    private final static Logger logger = LogManager.getLogger(AdminUpdateTimesheetStatusHandler.class.getName());
 
 
-    public String handleRequest(Timesheet timesheetEvent, Context context) {
+    public  String handleRequest(TimesheetStatusRequest timesheetUpdateStatusEvent, Context context) {
         try {
 
-            System.out.println(timesheetEvent);
+            System.out.println(timesheetUpdateStatusEvent);
 
-            timesheetService.saveTimesheet(timesheetEvent);
+            timesheetService.updatingTimesheetStatus(timesheetUpdateStatusEvent);
 
             return "Successfully updated timesheet status.";
         } catch (Exception e) {

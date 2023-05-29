@@ -1,0 +1,25 @@
+cloud:
+  aws:
+    credentials:
+      access-key:AKIA5K4VBWFR5BZNV24Q
+      secret-key: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
+    region:
+      static: us-east-1
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: my-timesheet-bucket
+
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+server:
+  port: 9090
